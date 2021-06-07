@@ -53,4 +53,4 @@ async def probe_asyncio(filename, cmd='ffprobe', **kwargs) -> object:
     return json.loads(out.decode('utf-8'))
 
 
-__all__ = ['probe']
+__all__ = ['probe', 'probe_asyncio']
