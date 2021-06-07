@@ -29,7 +29,7 @@ def probe(filename, cmd='ffprobe', timeout=None, **kwargs):
     return json.loads(out.decode('utf-8'))
 
 
-async def probe_asyncio(filename, cmd='ffprobe', **kwargs) -> object:
+async def probe_asyncio(filename: str, cmd='ffprobe', **kwargs) -> dict:
     """Run ffprobe on the specified file and return a JSON representation of the output.
 
     Raises:
