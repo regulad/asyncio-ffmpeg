@@ -1,14 +1,16 @@
 from __future__ import unicode_literals
-from .dag import get_outgoing_edges, topo_sort
-from ._utils import basestring, convert_kwargs_to_cmd_line_args
-from builtins import str
-from functools import reduce
+
+import asyncio
 import collections
 import copy
 import operator
 import subprocess
+from builtins import str
+from functools import reduce
 
 from ._ffmpeg import input, output
+from ._utils import basestring, convert_kwargs_to_cmd_line_args
+from .dag import get_outgoing_edges, topo_sort
 from .nodes import (
     get_stream_spec_nodes,
     FilterNode,
@@ -137,7 +139,7 @@ def _get_output_args(node, stream_name_map):
     if 'video_size' in kwargs:
         video_size = kwargs.pop('video_size')
         if not isinstance(video_size, basestring) and isinstance(
-            video_size, collections.Iterable
+                video_size, collections.Iterable
         ):
             video_size = '{}x{}'.format(video_size[0], video_size[1])
         args += ['-video_size', video_size]
@@ -192,14 +194,14 @@ def compile(stream_spec, cmd='ffmpeg', overwrite_output=False):
 
 @output_operator()
 def run_async(
-    stream_spec,
-    cmd='ffmpeg',
-    pipe_stdin=False,
-    pipe_stdout=False,
-    pipe_stderr=False,
-    quiet=False,
-    overwrite_output=False,
-    cwd=None
+        stream_spec,
+        cmd='ffmpeg',
+        pipe_stdin=False,
+        pipe_stdout=False,
+        pipe_stderr=False,
+        quiet=False,
+        overwrite_output=False,
+        cwd=None
 ):
     """Asynchronously invoke ffmpeg for the supplied node graph.
 
@@ -292,15 +294,53 @@ def run_async(
 
 
 @output_operator()
+async def run_asyncio(
+        stream_spec, cmd='ffmpeg', pipe_stdin=False, pipe_stdout=False, pipe_stderr=False,
+        quiet=False, overwrite_output=False
+):
+    """Asynchronously invoke ffmpeg in asyncio sync/await style and return coroutine.
+    Have the same possibilities as `run_async` call.
+    Args:
+        pipe_stdin: if True, connect pipe to subprocess stdin (to be
+            used with ``pipe:`` ffmpeg inputs).
+        pipe_stdout: if True, connect pipe to subprocess stdout (to be
+            used with ``pipe:`` ffmpeg outputs).
+        pipe_stderr: if True, connect pipe to subprocess stderr.
+        quiet: shorthand for setting ``capture_stdout`` and
+            ``capture_stderr``.
+    Returns:
+        A Process instance as a coroutine
+    """
+
+    args = compile(stream_spec, cmd, overwrite_output=overwrite_output)
+    stdin_stream = asyncio.subprocess.PIPE if pipe_stdin else None
+    stdout_stream = asyncio.subprocess.PIPE if pipe_stdout or quiet else None
+    stderr_stream = asyncio.subprocess.PIPE if pipe_stderr or quiet else None
+
+    p = await asyncio.create_subprocess_exec(
+        *args,
+        stdin=stdin_stream,
+        stdout=stdout_stream,
+        stderr=stderr_stream
+    )
+
+    out, err = await p.communicate()
+    if p.returncode != 0:
+        raise Error('ffprobe', out, err)
+
+    return out
+
+
+@output_operator()
 def run(
-    stream_spec,
-    cmd='ffmpeg',
-    capture_stdout=False,
-    capture_stderr=False,
-    input=None,
-    quiet=False,
-    overwrite_output=False,
-    cwd=None
+        stream_spec,
+        cmd='ffmpeg',
+        capture_stdout=False,
+        capture_stderr=False,
+        input=None,
+        quiet=False,
+        overwrite_output=False,
+        cwd=None
 ):
     """Invoke ffmpeg for the supplied node graph.
 
@@ -333,4 +373,4 @@ def run(
     return out, err
 
 
-__all__ = ['compile', 'Error', 'get_args', 'run', 'run_async']
+__all__ = ['compile', 'Error', 'get_args', 'run', 'run_async', 'run_asyncio']

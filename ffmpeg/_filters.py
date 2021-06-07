@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
-from .nodes import FilterNode, filter_operator
 from ._utils import escape_chars
+from .nodes import FilterNode, filter_operator
 
 
 @filter_operator()

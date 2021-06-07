@@ -1,10 +1,12 @@
 from __future__ import unicode_literals
 
-from past.builtins import basestring
-from .dag import KwargReprNode
-from ._utils import escape_chars, get_hash_int
-from builtins import object
 import os
+from builtins import object
+
+from past.builtins import basestring
+
+from ._utils import escape_chars, get_hash_int
+from .dag import KwargReprNode
 
 
 def _is_of_types(obj, types):
@@ -24,7 +26,7 @@ class Stream(object):
     """Represents the outgoing edge of an upstream node; may be used to create more downstream nodes."""
 
     def __init__(
-        self, upstream_node, upstream_label, node_types, upstream_selector=None
+            self, upstream_node, upstream_label, node_types, upstream_selector=None
     ):
         if not _is_of_types(upstream_node, node_types):
             raise TypeError(
@@ -187,15 +189,15 @@ class Node(KwargReprNode):
         return incoming_edge_map
 
     def __init__(
-        self,
-        stream_spec,
-        name,
-        incoming_stream_types,
-        outgoing_stream_type,
-        min_inputs,
-        max_inputs,
-        args=[],
-        kwargs={},
+            self,
+            stream_spec,
+            name,
+            incoming_stream_types,
+            outgoing_stream_type,
+            min_inputs,
+            max_inputs,
+            args=[],
+            kwargs={},
     ):
         stream_map = get_stream_map(stream_spec)
         self.__check_input_len(stream_map, min_inputs, max_inputs)

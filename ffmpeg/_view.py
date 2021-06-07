@@ -1,9 +1,7 @@
 from __future__ import unicode_literals
 
-from builtins import str
-from .dag import get_outgoing_edges
-from ._run import topo_sort
 import tempfile
+from builtins import str
 
 from ffmpeg.nodes import (
     FilterNode,
@@ -12,7 +10,8 @@ from ffmpeg.nodes import (
     OutputNode,
     stream_operator,
 )
-
+from ._run import topo_sort
+from .dag import get_outgoing_edges
 
 _RIGHT_ARROW = '\u2192'
 
@@ -79,9 +78,9 @@ def view(stream_spec, detail=False, filename=None, pipe=False, **kwargs):
             up_selector = edge.upstream_selector
 
             if show_labels and (
-                up_label is not None
-                or down_label is not None
-                or up_selector is not None
+                    up_label is not None
+                    or down_label is not None
+                    or up_selector is not None
             ):
                 if up_label is None:
                     up_label = ''

@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
-from builtins import str
-from past.builtins import basestring
+
+import collections
 import hashlib
 import sys
-import collections
+from builtins import str
 
+from past.builtins import basestring
 
 if sys.version_info.major == 2:
     # noinspection PyUnresolvedReferences,PyShadowingBuiltins
