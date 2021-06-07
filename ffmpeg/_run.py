@@ -328,7 +328,7 @@ async def run_asyncio(
     if p.returncode != 0:
         raise Error('ffprobe', out, err)
 
-    return out
+    return out, error
 
 
 @output_operator()
