@@ -65,4 +65,6 @@ jobs:
       - name: Update PATH
         run: export PATH=$(readlink -f ffmpeg-release):$PATH
       - name: Run tox
-        run: tox -e TOX_ENV=${{ matrix.toxenv }}
+        run: tox -e $TOX_ENV
+        env:
+          TOX_ENV: ${{ matrix.toxenv }}
