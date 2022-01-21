@@ -1,4 +1,4 @@
-ffmpeg-python
+async-ffmpeg
 gevent
 google-cloud-speech
 graphviz

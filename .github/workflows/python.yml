@@ -15,15 +15,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - python: "2.7"
-            os: ubuntu-18.04
-            toxenv: py27
-          - python: "3.4"
-            os: ubuntu-18.04
-            toxenv: py34
-          - python: "3.5"
-            os: ubuntu-18.04
-            toxenv: py35
           - python: "3.6"
             os: ubuntu-18.04
             toxenv: py36
