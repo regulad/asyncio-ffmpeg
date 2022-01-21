@@ -36,6 +36,12 @@ def with_metaclass(meta, *bases):
     return metaclass('temporary_class', None, {})
 
 
+try:
+    from typing import Iterable
+except ImportError:
+    from collections import Iterable
+
+
 if sys.version_info.major >= 3:
 
     class basestring(with_metaclass(BaseBaseString)):
@@ -94,7 +100,7 @@ def convert_kwargs_to_cmd_line_args(kwargs):
     args = []
     for k in sorted(kwargs.keys()):
         v = kwargs[k]
-        if isinstance(v, collections.Iterable) and not isinstance(v, str):
+        if isinstance(v, Iterable) and not isinstance(v, str):
             for value in v:
                 args.append('-{}'.format(k))
                 if value is not None:

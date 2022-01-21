@@ -63,7 +63,7 @@ setup(
     setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pytest-mock'],
     version=version,
-    description='AsyncioPython bindings for FFmpeg - with complex filtering support',
+    description='Async Python bindings for FFmpeg - with complex filtering support',
     author='Parker Wahle',
     author_email='regulad@regulad.xyz',
     url='https://github.com/regulad/asyncio-ffmpeg',
@@ -90,5 +90,9 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
 )

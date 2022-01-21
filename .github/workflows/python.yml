@@ -1,0 +1,68 @@
+name: Python
+
+on:
+  push:
+    paths:
+      - "**.py"
+      - ".github/workflows/python.yml"
+  pull_request:
+    paths:
+      - "**.py"
+      - ".github/workflows/python.yml"
+  workflow_dispatch:
+jobs:
+  test:
+    strategy:
+      matrix:
+        include:
+          - python: 2.7
+            os: ubuntu-18.04
+            toxenv: py27
+          - python: 3.4
+            os: ubuntu-18.04
+            toxenv: py34
+          - python: 3.5
+            os: ubuntu-18.04
+            toxenv: py35
+          - python: 3.6
+            os: ubuntu-18.04
+            toxenv: py36
+          - python: 3.7
+            os: ubuntu-latest
+            toxenv: py37
+          - python: 3.8
+            os: ubuntu-latest
+            toxenv: py38
+          - python: 3.9
+            os: ubuntu-latest
+            toxenv: py39
+          - python: 3.10
+            os: ubuntu-latest
+            toxenv: py310
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          path: |
+            .tox
+            ffmpeg-release
+          key: ${{ runner.os }}-${{ hashFiles('**/setup.py') }}
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install ffmpeg
+        run: |
+          [ -f ffmpeg-release/ffmpeg ] || (
+            curl -O https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz &&
+            mkdir -p ffmpeg-release &&
+            tar Jxf ffmpeg-release-amd64-static.tar.xz --strip-components=1 -C ffmpeg-release
+          )
+      - name: Install tox
+        run: pip install tox
+      - name: Update PATH
+        run: export PATH=$(readlink -f ffmpeg-release):$PATH
+      - name: Run tox
+        run: tox -e TOX_ENV=${{ matrix.toxenv }}

@@ -21,6 +21,12 @@ from .nodes import (
 )
 
 
+try:
+    from typing import Iterable
+except ImportError:
+    from collections import Iterable
+
+
 class Error(Exception):
     def __init__(self, cmd, stdout, stderr):
         super(Error, self).__init__(
@@ -139,7 +145,7 @@ def _get_output_args(node, stream_name_map):
     if 'video_size' in kwargs:
         video_size = kwargs.pop('video_size')
         if not isinstance(video_size, basestring) and isinstance(
-                video_size, collections.Iterable
+                video_size, Iterable
         ):
             video_size = '{}x{}'.format(video_size[0], video_size[1])
         args += ['-video_size', video_size]
