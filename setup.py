@@ -2,17 +2,17 @@ from setuptools import setup
 from textwrap import dedent
 
 version = '0.2.0'
-download_url = 'https://github.com/kkroening/ffmpeg-python/archive/v{}.zip'.format(
+download_url = 'https://github.com/regulad/asyncio-ffmpeg/archive/v{}.zip'.format(
     version
 )
 
 long_description = dedent(
     '''\
-    ffmpeg-python: Python bindings for FFmpeg
+    asyncio-ffmpeg: Asyncio Python bindings for FFmpeg
     =========================================
 
-    :Github: https://github.com/kkroening/ffmpeg-python
-    :API Reference: https://kkroening.github.io/ffmpeg-python/
+    :Github: https://github.com/asyncio-ffmpeg
+    :API Reference: https://www.regulad.xyz/asyncio-ffmpeg/
 '''
 )
 
@@ -58,15 +58,15 @@ misc_keywords = [
 keywords = misc_keywords + file_formats
 
 setup(
-    name='ffmpeg-python',
+    name='asyncio-ffmpeg',
     packages=['ffmpeg'],
     setup_requires=['pytest-runner'],
     tests_require=['pytest', 'pytest-mock'],
     version=version,
-    description='Python bindings for FFmpeg - with complex filtering support',
-    author='Karl Kroening',
-    author_email='karlk@kralnet.us',
-    url='https://github.com/kkroening/ffmpeg-python',
+    description='AsyncioPython bindings for FFmpeg - with complex filtering support',
+    author='Parker Wahle',
+    author_email='regulad@regulad.xyz',
+    url='https://github.com/regulad/asyncio-ffmpeg',
     download_url=download_url,
     keywords=keywords,
     long_description=long_description,
