@@ -2,7 +2,7 @@
 
 Welcome to my special sauce fork of `ffmpeg-python`, with `asyncio` support.
 
-[![Build status](https://travis-ci.org/kkroening/ffmpeg-python.svg?branch=master)](https://travis-ci.org/kkroening/ffmpeg-python)
+[![Build status](https://img.shields.io/github/checks-status/regulad/asyncio-ffmpeg/asyncio)](https://github.com/regulad/asyncio-ffmpeg/actions)
 
 <img src="https://raw.githubusercontent.com/kkroening/ffmpeg-python/master/doc/formula.png" alt="ffmpeg-python logo" width="60%" />
 
