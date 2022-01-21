@@ -15,28 +15,28 @@ jobs:
     strategy:
       matrix:
         include:
-          - python: 2.7
+          - python: "2.7"
             os: ubuntu-18.04
             toxenv: py27
-          - python: 3.4
+          - python: "3.4"
             os: ubuntu-18.04
             toxenv: py34
-          - python: 3.5
+          - python: "3.5"
             os: ubuntu-18.04
             toxenv: py35
-          - python: 3.6
+          - python: "3.6"
             os: ubuntu-18.04
             toxenv: py36
-          - python: 3.7
+          - python: "3.7"
             os: ubuntu-latest
             toxenv: py37
-          - python: 3.8
+          - python: "3.8"
             os: ubuntu-latest
             toxenv: py38
-          - python: 3.9
+          - python: "3.9"
             os: ubuntu-latest
             toxenv: py39
-          - python: 3.10
+          - python: "3.10"
             os: ubuntu-latest
             toxenv: py310
     runs-on: ${{ matrix.os }}
