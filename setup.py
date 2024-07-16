@@ -77,7 +77,7 @@ setup(
             'numpy==1.16.4',
             'pytest-mock==1.10.4',
             'pytest==4.6.1',
-            'Sphinx==2.1.0',
+            'Sphinx==7.4.4',
             'tox==3.12.1',
         ]
     },
